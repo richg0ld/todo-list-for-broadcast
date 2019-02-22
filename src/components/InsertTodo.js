@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -49,6 +49,8 @@ const useInput = defaultValue => {
   return { value, onChange, setValue };
 };
 
+const inputTitleRef = createRef();
+
 const InsertTodo = ({ onSubmit }) => {
   const title = useInput("");
   const description = useInput("");
@@ -58,6 +60,7 @@ const InsertTodo = ({ onSubmit }) => {
     onSubmit(title.value, description.value);
     title.setValue("");
     description.setValue("");
+    inputTitleRef.current.focus();
   };
   return (
     <form onSubmit={onSubmitHandler}>
@@ -65,7 +68,7 @@ const InsertTodo = ({ onSubmit }) => {
         <InputContainerWrapper>
           <InputContainer>
             <Label>제목 :</Label>
-            <Input {...title} />
+            <Input {...title} ref={inputTitleRef} />
           </InputContainer>
           <InputContainer>
             <Label>할일 :</Label>
