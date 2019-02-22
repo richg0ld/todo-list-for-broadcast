@@ -1,4 +1,40 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+`;
+
+const SubmitButton = styled.button.attrs({ type: "submit" })`
+  width: 50px;
+  background-color: #232738;
+  border: 1px solid #3e3f5c;
+  color: #ffffff;
+`;
+
+const InputContainerWrapper = styled.div`
+  flex: 1;
+`;
+const InputContainer = styled.div`
+  display: flex;
+  background-color: #232738;
+  color: #ffffff;
+  padding: 10px;
+`;
+
+const Label = styled.label`
+  width: 70px;
+  font-size: 20px;
+`;
+
+const Input = styled.input.attrs({ type: "text" })`
+  flex: 1;
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  color: #ffffff;
+  font-size: 20px;
+`;
 
 const InsertTodo = ({ onSubmit }) => {
   const [title, setTitle] = useState("");
@@ -11,21 +47,24 @@ const InsertTodo = ({ onSubmit }) => {
     setDescription("");
   };
   return (
-    <div>
-      <form onSubmit={onSubmitHandler}>
-        <input
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-        />
-        <button type="submit">추가</button>
-      </form>
-    </div>
+    <form onSubmit={onSubmitHandler}>
+      <Container>
+        <InputContainerWrapper>
+          <InputContainer>
+            <Label>제목 :</Label>
+            <Input value={title} onChange={e => setTitle(e.target.value)} />
+          </InputContainer>
+          <InputContainer>
+            <Label>할일 :</Label>
+            <Input
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+            />
+          </InputContainer>
+        </InputContainerWrapper>
+        <SubmitButton>추가</SubmitButton>
+      </Container>
+    </form>
   );
 };
 

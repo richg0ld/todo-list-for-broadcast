@@ -1,13 +1,16 @@
 import React from "react";
+import Todo from "./Todo";
 
-const TodoList = ({ list }) => {
+const TodoList = ({ list, onToggleFinish, onDelete }) => {
   return (
     <div>
       {list.map((todo, i) => (
-        <div key={i}>
-          <h2>{todo.title}</h2>
-          <p>{todo.description}</p>
-        </div>
+        <Todo
+          key={i}
+          {...todo}
+          onToggleFinish={onToggleFinish}
+          onDelete={onDelete}
+        />
       ))}
     </div>
   );
