@@ -36,15 +36,28 @@ const Input = styled.input.attrs({ type: "text" })`
   font-size: 20px;
 `;
 
+const useInput = defaultValue => {
+  const [value, setValue] = useState(defaultValue);
+
+  const onChange = e => {
+    const {
+      target: { value }
+    } = e;
+    setValue(value);
+  };
+
+  return { value, onChange, setValue };
+};
+
 const InsertTodo = ({ onSubmit }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const title = useInput("");
+  const description = useInput("");
   const onSubmitHandler = e => {
     e.preventDefault();
-    if (!title || !description) return;
-    onSubmit(title, description);
-    setTitle("");
-    setDescription("");
+    if (!title.value || !description.value) return;
+    onSubmit(title.value, description.value);
+    title.setValue("");
+    description.setValue("");
   };
   return (
     <form onSubmit={onSubmitHandler}>
@@ -52,14 +65,11 @@ const InsertTodo = ({ onSubmit }) => {
         <InputContainerWrapper>
           <InputContainer>
             <Label>제목 :</Label>
-            <Input value={title} onChange={e => setTitle(e.target.value)} />
+            <Input {...title} />
           </InputContainer>
           <InputContainer>
             <Label>할일 :</Label>
-            <Input
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-            />
+            <Input {...description} />
           </InputContainer>
         </InputContainerWrapper>
         <SubmitButton>추가</SubmitButton>
